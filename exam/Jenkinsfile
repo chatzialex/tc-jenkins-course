@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    stages {
+        stage('Test simulation') {
+            steps {
+                sh 'python -m unittest exam/test_drone_sim.py'
+            }
+        }
+        stage('Land drone') {
+            steps {
+                sh '''
+                rostopic pub /drone/land std_msgs/Empty '{}' &
+                LAND_ID=$!
+                sleep 5s
+                kill $LAND_ID
+                '''
+            }
+        }
+    }
+}
