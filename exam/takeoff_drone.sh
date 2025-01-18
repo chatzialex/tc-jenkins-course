@@ -9,4 +9,5 @@ if [ $? -eq 0 ]; then
   kill $TAKEOFF_PID
 else
   echo "Test failed, not running takeoff."
+  exit 1
 fi
